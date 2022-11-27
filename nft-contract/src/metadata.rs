@@ -5,38 +5,49 @@ pub type TokenId = String;
 #[serde(crate = "near_sdk::serde")]
 pub struct Payout {
     pub payout: HashMap<AccountId, U128>,
-} 
+}
 
 #[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize, Clone)]
 #[serde(crate = "near_sdk::serde")]
 pub struct NFTContractMetadata {
-    /*
-        FILL THIS IN
-    */
+    pub spec: String,
+    pub name: String,
+    pub symbol: String,
+    pub icon: Option<String>,
+    pub base_uri: Option<String>,
+    pub reference: Option<String>,
+    pub reference_hash: Option<Base64VecU8>,
 }
 
 #[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct TokenMetadata {
-    /*
-        FILL THIS IN
-    */
+    pub title: Option<String>,
+    pub description: Option<String>,
+    pub media: Option<String>,
+    pub media_hash: Option<Base64VecU8>,
+    pub copies: Option<u64>,
+    pub issued_at: Option<u64>,
+    pub expires_at: Option<u64>,
+    pub starts_at: Option<u64>,
+    pub updated_at: Option<u64>,
+    pub extra: Option<String>,
+    pub reference: Option<String>,
+    pub reference_hash: Option<Base64VecU8>,
 }
 
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Token {
-    /*
-        FILL THIS IN
-    */
+    pub owner_id: AccountId,
 }
 
-//The Json token is what will be returned from view calls. 
+//The Json token is what will be returned from view calls.
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct JsonToken {
-    /*
-        FILL THIS IN
-    */
+    pub token_id: TokenId,
+    pub owner_id: AccountId,
+    pub metadata: TokenMetadata,
 }
 
 pub trait NonFungibleTokenMetadata {
@@ -47,9 +58,6 @@ pub trait NonFungibleTokenMetadata {
 #[near_bindgen]
 impl NonFungibleTokenMetadata for Contract {
     fn nft_metadata(&self) -> NFTContractMetadata {
-        /*
-            FILL THIS IN
-        */
-        todo!(); //remove once code is filled in.
+        self.metadata.get().unwrap()
     }
 }
