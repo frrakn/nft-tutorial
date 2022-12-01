@@ -8,6 +8,7 @@ use near_sdk::{
 use std::collections::HashMap;
 
 pub use crate::approval::*;
+use crate::internal::*;
 pub use crate::metadata::*;
 pub use crate::mint::*;
 pub use crate::nft_core::*;
@@ -15,6 +16,7 @@ pub use crate::royalty::*;
 
 mod approval;
 mod enumeration;
+mod internal;
 mod metadata;
 mod mint;
 mod nft_core;

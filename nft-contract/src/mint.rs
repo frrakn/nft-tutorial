@@ -9,8 +9,26 @@ impl Contract {
         metadata: TokenMetadata,
         receiver_id: Option<AccountId>,
     ) {
-        /*
-            FILL THIS IN
-        */
+        let initial_storage_usage = env::storage_usage();
+
+        let token = Token {
+            owner_id: receiver_id.unwrap(),
+        };
+
+        let token_id_actual = token_id.unwrap();
+
+        assert!(
+            self.tokens_by_id.insert(&token_id_actual, &token).is_none(),
+            "Token already exists"
+        );
+
+        self.token_metadata_by_id
+            .insert(&token_id_actual, &metadata);
+
+        self.internal_add_token_to_owner(&token.owner_id, &token_id_actual);
+
+        let required_storage_in_bytes = env::storage_usage() - initial_storage_usage;
+
+        refund_deposit(required_storage_in_bytes);
     }
 }
